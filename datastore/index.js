@@ -7,11 +7,33 @@ var items = {};
 
 // Public API - Fix these CRUD functions ///////////////////////////////////////
 
+//take this js obj in memory and write it to a file - json.stringify
+
 exports.create = (text, callback) => {
-  var id = counter.getNextUniqueId();
-  items[id] = text;
-  callback(null, { id, text });
+  //assuming we are going to pass the callback function all the way down to counter.getNextunique ID
+
+  // should create a new file for each todo
+  // 2) should use the generated unique id as the filename
+  // 3) should only save todo text contents in file
+  counter.getNextUniqueId((err, string) => {
+    if (err) {
+      callback(err)
+    } else {
+      fs.writeFile(exports.dataDir + string + '.txt', text, (err) => {
+        if (err) {
+          callback(err)
+        }
+         else {
+          callback(null, { string, text });
+         }
+
+      });
+  };
+
+
+});
 };
+//use JSON.parse to read the file on hardrive and have it render back on to the client?????
 
 exports.readAll = (callback) => {
   var data = _.map(items, (text, id) => {
