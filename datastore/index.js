@@ -10,28 +10,36 @@ var items = {};
 //take this js obj in memory and write it to a file - json.stringify
 
 exports.create = (text, callback) => {
-  //assuming we are going to pass the callback function all the way down to counter.getNextunique ID
 
-  // should create a new file for each todo
-  // 2) should use the generated unique id as the filename
-  // 3) should only save todo text contents in file
-  counter.getNextUniqueId((err, string) => {
+  counter.getNextUniqueId((err, id) => {
     if (err) {
-      callback(err)
+      throw ('error');
     } else {
-      fs.writeFile(exports.dataDir + string + '.txt', text, (err) => {
+
+      fs.writeFile(`${exports.dataDir}/${id}.txt`, text, (err) => {
         if (err) {
-          callback(err)
+          throw ('error');
+        } else {
+          callback(null, { id, text });
         }
-         else {
-          callback(null, { string, text });
-         }
-
       });
-  };
+    }
+  });
 
-
-});
+  // counter.getNextUniqueId((err, id) => {
+  //   if (err) {
+  //     throw ('Cannot create!');
+  //   } else {
+  //     // console.log(`${exports.dataDir}`, `${id}.txt`)
+  //     fs.writeFile(`${exports.dataDir}/${id}.txt`, text, (err) => {
+  //       if (err) {
+  //         throw ('Cannot create, writeFile');
+  //       } else {
+  //         callback(null, { id, text });
+  //       }
+  //     });
+  //   }
+  // });
 };
 //use JSON.parse to read the file on hardrive and have it render back on to the client?????
 

@@ -44,18 +44,18 @@ exports.getNextUniqueId = (callback) => {
   //ultimately whatever call back gets put into the argument is going to be used in write counter
   readCounter((err, count) => {
     if (err) {
-      throw ('error in readCounter')
+      throw ('error in readCounter');
     } else {
       count++;
     }
     writeCounter(count, (err, counterString) => {
       if (err) {
-        throw ('error in writecounter')
+        throw ('error in writecounter');
       } else {
-        callback(null, counterString)
+        callback(null, counterString);
       }
-    })
-  })
+    });
+  });
 
 };
 
