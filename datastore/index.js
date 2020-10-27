@@ -25,29 +25,24 @@ exports.create = (text, callback) => {
       });
     }
   });
-
-  // counter.getNextUniqueId((err, id) => {
-  //   if (err) {
-  //     throw ('Cannot create!');
-  //   } else {
-  //     // console.log(`${exports.dataDir}`, `${id}.txt`)
-  //     fs.writeFile(`${exports.dataDir}/${id}.txt`, text, (err) => {
-  //       if (err) {
-  //         throw ('Cannot create, writeFile');
-  //       } else {
-  //         callback(null, { id, text });
-  //       }
-  //     });
-  //   }
-  // });
 };
 //use JSON.parse to read the file on hardrive and have it render back on to the client?????
 
 exports.readAll = (callback) => {
-  var data = _.map(items, (text, id) => {
-    return { id, text };
+
+  fs.readdir(exports.dataDir, (err, file) => {
+    if (err) {
+      throw ('error');
+    } else {
+      console.log(file);
+      var data = _.map(file, (text, id) => {
+        return { id, text };
+      });
+      callback(null, data);
+    }
   });
-  callback(null, data);
+
+
 };
 
 exports.readOne = (id, callback) => {
